@@ -28,32 +28,6 @@ cost. This harness answers all four, side by side, for any model you plug in.
 
 ---
 
-## See it catch a real hallucination, live
-
-This is the dashboard actually running — not a mockup. A grounded prompt was
-sent with real supporting context to all three demo models simultaneously:
-
-![Dashboard overview](screenshots/dashboard-overview.png)
-
-Watch what happens when the context only supports certain facts. The
-`demo-fast` persona fabricated a statistic — *"approximately 42% higher than
-industry average"* — that appears nowhere in the provided context. The
-grounding check catches it instantly:
-
-![Hallucination detection catching a fabricated statistic](screenshots/hallucination-detection-demo.png)
-
-Notice the scoring difference: `demo-fast` gets flagged with
-**`hallucination 1`** (fully ungrounded) and drops to **`score 0`**, while
-`demo-balanced` and `demo-quality` stayed grounded and scored **`1`**. This
-isn't a canned demo — it's the actual `hallucination_score()` function in
-`eval/scorers.py` running against real response text in real time.
-
-The **"Try Your Own Prompt"** panel lets anyone test this live:
-
-![Try your own prompt panel](screenshots/try-your-own-prompt.png)
-
----
-
 ## Try it yourself — zero setup required
 
 ```bash
@@ -65,7 +39,12 @@ Open `http://localhost:8000` — three **demo personas** (`demo-fast`,
 `demo-balanced`, `demo-quality`) are already active and ready to compare. No
 API key, no signup, nothing to configure. Click "Run full suite" and the
 dashboard runs 12 test cases across all three and renders the comparison
-live, exactly like the screenshots above.
+live.
+
+The "Try Your Own Prompt" panel lets you test any prompt live and watch the
+hallucination detector work in real time — send a prompt with supporting
+context, and any claim in the response that isn't backed by that context
+gets flagged instantly.
 
 ---
 
@@ -130,7 +109,7 @@ with two live panels:
    per-test-case results table.
 2. **Try Your Own Prompt** — type any prompt (optionally with grounding
    context), hit run, and watch every active provider respond in real time
-   with live scores, as shown in the screenshots above.
+   with live scores.
 
 ---
 
@@ -168,7 +147,6 @@ llm-eval-harness/
 │   └── testsuite.py              # loads data/testsuite.yaml
 ├── data/testsuite.yaml
 ├── static/index.html             # the dashboard (vanilla JS + Chart.js)
-├── screenshots/                  # dashboard proof-of-work (see above)
 ├── tests/test_harness.py         # 15 tests: API + scorer unit tests
 ├── cli.py                        # run evaluation from the command line
 ├── .github/workflows/ci.yml
